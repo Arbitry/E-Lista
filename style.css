@@ -1,0 +1,1359 @@
+/* =====================================================================
+   DESIGN SYSTEM VARIABLES
+   ===================================================================== */
+:root {
+    /* Brand Colors */
+    --primary: #1E2C52;
+    --accent: #E8B64B;
+    --bg-main:#F4F6F9;
+
+    /* UI Colors */
+    --text-dark: #475569;
+    --text-light: white;
+    --border-gray: #c2c9d1;
+    --placeholder-gray: #94A3B8;
+    --label-dark: #475569;
+    --hover-gray: #7a828e;
+    --focus-blue:#476CDD;
+    --error-red: #DC2626;
+    
+    /* Elevtation Shadows */
+    --shadow-sm: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0px 10px 25px rgba(0, 0, 0, 0.1);
+
+    --transition-smooth: all 0.2s ease;
+
+}
+
+
+/* =====================================================================
+   GLOBAL RESET & BASE LAYOUT
+   ===================================================================== */
+* {
+    /* outline: 2px solid red; */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: row;
+
+    font-family: 'Inter',Arial, Helvetica, sans-serif;
+    background-color: var(--bg-main);
+
+    overflow: hidden;
+}
+
+.main-viewport {
+    flex: 1;
+    min-height: 0;
+    padding: 2rem 3rem 1.3rem 3rem;
+}
+
+.hidden {
+    display: none !important; 
+}
+
+
+/* =====================================================================
+   SIDEBAR — brand mark + section navigation
+   ===================================================================== */
+.full-height-bar {
+    width: 285px;
+
+    padding: 3rem 1.28rem 1rem;
+    gap: 3rem;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+
+}
+
+.horizontal-bar-sm {
+    display: flex;
+    gap: 0.5rem;
+
+}
+
+.vertical-bar-sm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    flex-grow: 1;
+}
+
+.horizontal-bar-xs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 0.8rem 1.2rem;
+    gap: 0.8rem;
+
+    border-radius: 8px;
+    background-color: transparent;
+    border: none;
+
+    cursor: pointer;
+    transition: var(--transition-smooth);
+
+}
+
+.horizontal-bar-xs:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
+}
+
+.horizontal-bar-xs:hover .text-sm {
+    opacity: 1;
+}
+
+.horizontal-bar-xs:active {
+    transform: translateX(4px) scale(.98);
+}
+
+.icon-sm {
+    height: 20px;
+    width: 20px;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+.text-sm {
+    font-weight: 500;
+    font-size: 1.06rem;
+    color: var(--text-light);
+    opacity: 0.9;
+    transition: var(--transition-smooth);
+    white-space: nowrap;
+
+}
+
+/* NOTE: this rule is a byte-for-byte duplicate of ".horizontal-bar-xs:hover .text-sm"
+   a few lines up — left untouched since the reorg pass doesn't remove anything,
+   but flagging it here in case you want to delete the duplicate later. */
+.horizontal-bar-xs:hover .text-sm {
+    opacity: 1; 
+}
+
+.vertical-bar-sm > :last-child {
+    margin-top: auto;
+}
+
+.icon-container-circular {
+    height: 48px;
+    width: 48px;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-shrink: 0;
+
+    background-color: var(--accent);
+}
+
+.icon-inverted-color {
+    height: 85%;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+.square-sm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.1em;
+}
+
+.golden-md-text {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.1;
+}
+
+.text-xxs {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
+/* Active nav button state — applied via JS to whichever section is open */
+.active {
+    background-color: var(--accent);
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    transform: translateX(6px);
+}
+
+.active:hover {
+    background-color: var(--accent);
+    transform: translateX(6px);
+
+}
+
+.active .text-sm,
+.active:hover .text-sm {
+    color: var(--primary);
+}
+
+.active .icon-sm,
+.active:hover .icon-sm {
+    filter: invert(18%) sepia(28%) saturate(1264%) hue-rotate(185deg) brightness(92%) contrast(96%);
+    transform: scale(1.1);
+}
+
+.active:active {
+    transform: translateX(4px) scale(.98);
+}
+
+
+/* =====================================================================
+   SECTION HEADERS — shared banner styles used by Log Transaction
+   (large) and Transaction Records (compact) at the top of each page
+   ===================================================================== */
+.secondary-viewport,
+.secondary-viewport-compact {
+    width: 100%;
+
+    gap: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.secondary-viewport-compact {
+    gap: 1.3rem;
+}
+
+/* --- Large variant (Log Transaction) --- */
+.section-header {
+    height: 180px;
+    width: 100%;
+
+    padding: 2rem 2.5rem;
+
+    display: flex;
+    justify-content: space-between;
+
+    background-color: #FDF6F0;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+
+    border-left: 6px solid var(--accent);
+}
+
+.section-header-content {
+    gap: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square-md {
+    gap: 0.2rem ;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.circle-md {
+    height: 90px;
+    width: 90px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    border-radius: 100%;
+    background-color: #F7E9D5;
+}
+
+.icon-md {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+}
+
+.icon-lg {
+    height: 120px;
+    width: 120px;
+    filter: brightness(0) saturate(100%) invert(91%) sepia(17%) saturate(302%) hue-rotate(352deg) brightness(101%) contrast(91%);
+
+    object-fit: contain;
+}
+
+.square-md h1,
+.square-md h3{
+    color: var(--primary);
+}
+.square-md h3 {
+    line-height: 1.4;
+    font-weight: 400;
+}
+.square-md h1 {
+    font-size: 1.8rem;
+}
+
+/* --- Compact variant (Transaction Records) --- */
+.section-header-compact {
+    height: 130px;
+    width: 100%;
+
+    padding: 2rem 2.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #FDF6F0;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+
+    border-left: 6px solid var(--accent);
+
+}
+
+.section-header-content-compact {
+    gap: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-header-content-compact .circle-md {
+    height: 65px;
+    width: 65px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    border-radius: 100%;
+    background-color: #F7E9D5;
+}
+
+.icon-md-compact {
+    height: 36.11px;
+    width: 36.11px;
+    object-fit: contain;
+}
+
+
+
+.square-md-compact h1,
+.square-md-compact h3{
+    color: var(--primary);
+}
+
+.square-md-compact h3 {
+    line-height: 1.2;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.square-md-compact h1 {
+    font-size: 1.6rem;
+}
+
+.icon-lg-compact {
+    height: 86.67px;
+    width: 86.67px;
+    filter: brightness(0) saturate(100%) invert(91%) sepia(17%) saturate(302%) hue-rotate(352deg) brightness(101%) contrast(91%);
+
+    object-fit: contain;
+}
+
+
+/* =====================================================================
+   LOG TRANSACTION — form card & inputs
+   ===================================================================== */
+.form-card-content {
+    height: auto;
+    width: 100%;
+    
+    padding: 2rem 2rem 1rem 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+}
+
+.text-navy-md {
+    border-left: 4px solid var(--accent);
+    padding-left: 1rem ;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.form-grid > :first-child {
+    grid-column: span 2;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-gray);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 
+}
+
+.form-width-input-md-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--label-dark);
+}
+
+.form-width-input {
+    padding: 0.8rem 0.5rem;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+}
+
+.form-width-gold-button {
+    height: 52px;
+
+    margin-top: 0.5rem;
+
+    color: var(--primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    background-color: var(--accent);
+    border: none;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Hover, Placeholder, and Focus states */
+.icon-text-container-rectangle:hover {
+    cursor: pointer;
+    transform: translateY(-3px); 
+    filter: brightness(1.15);
+}
+
+.icon-text-container-rectangle:active {
+    transform: translateY(1px); 
+    filter: brightness(0.9);
+}
+
+
+.form-width-input:hover,
+.form-width-input:focus,
+.form-width-input::placeholder,
+label,
+.input-error,
+.input-error-label {
+    transition: var(--transition-smooth);
+}
+
+.form-width-input::placeholder {
+    color: transparent;
+}   
+
+.form-width-input:focus::placeholder {
+    color: var(--placeholder-gray); 
+}
+
+.form-width-input:hover {
+    border-color: var(--hover-gray);
+}
+
+.form-width-input:focus {
+    outline: none; 
+    border: 1.5px solid var(--focus-blue);
+    box-shadow: 0 0 0 2px rgba(71, 108, 221, 0.15);
+}
+
+.form-width-gold-button:hover {
+    transform: translateY(-3px); 
+    filter: brightness(1.15);
+    cursor: pointer;
+}
+
+.form-width-gold-button:active {
+    transform: translateY(1px); 
+    filter: brightness(0.9); 
+}
+
+
+/* =====================================================================
+   CONFIRMATION MODAL — review step before a transaction saves
+   ===================================================================== */
+.modal-card-centered {    
+    padding: 1.5rem 2.1rem;
+    margin: auto;
+
+    border: none;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-card-content {
+    display: flex;
+    flex-direction: column;
+    
+    gap: 1rem;
+}
+
+.modal-card-content dl {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-card-content h2 {
+    color: var(--accent);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-gray);
+
+}
+
+.modal-width-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.modal-width-box dt {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.modal-width-box dd {
+    font-weight: 400;
+}
+
+.buttons-container-rectangle {
+    display: flex;
+    justify-content: center;
+
+    gap: 0.5rem;
+    padding-top: 1rem;
+
+    border-top: 1px solid var(--border-gray);
+}
+
+.buttons-container-rectangle button{
+    flex: 1;
+    padding: 0.7rem;
+
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+
+    font-size: 0.9rem;
+    transition: var(--transition-smooth);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-md-navy {
+    background-color: var(--primary);
+    color: white;
+}
+
+.button-md-gold {
+    background-color: var(--accent);
+    color: var(--primary);
+}
+
+.buttons-container-rectangle button:hover {
+    cursor: pointer;
+    transform: translateY(-3px); 
+    filter: brightness(1.15);
+}
+
+.buttons-container-rectangle button:active {
+    transform: translateY(1px); 
+    filter: brightness(0.9);
+
+}
+
+
+/* =====================================================================
+   TRANSACTION RECORDS — filter bar (date / type / search + custom
+   range popup). See applyFilters() in script.js for the logic side.
+   ===================================================================== */
+.secondary-bar-full-width {
+    height: 110px;
+    width: 100%;
+
+    gap: 2rem;
+    padding: 0rem 1.8rem;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.rectangle-container-md {
+    padding: 0.5rem 0.4rem;
+    
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border-color: var(--border-gray);
+}
+
+.horizontal-bar-md {
+    position: relative;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-label {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+
+.filter-search:focus::placeholder {
+    color: transparent;
+}
+
+.filter-search:focus::placeholder {
+    opacity: 0;
+}
+
+/* Custom date range popup — hidden/shown via the "hidden" utility class
+   in response to the date-filter dropdown (see script.js) */
+.popup-sm {
+    position: absolute;
+
+    top: calc(100% + 0.5rem);
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    background: white;
+
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+
+    padding: 1rem;
+    gap: 1rem;
+
+    box-shadow: var(--shadow-lg);
+
+    z-index: 100;
+}
+
+.popup-sm > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.popup-sm input {
+    width: 100%;
+
+    padding: 0.75rem;
+
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+
+    font: inherit;
+}
+
+.popup-sm button {
+    width: 100%;
+
+    padding: 0.8rem;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: var(--accent);
+    color: var(--primary);
+
+    font: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+}
+
+.popup-sm button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.popup-sm button:active {
+    transform: translateY(1px); 
+    filter: brightness(0.9);
+}
+
+
+/* =====================================================================
+   TRANSACTION RECORDS — results table
+   ===================================================================== */
+.table-md {
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+}
+
+thead {
+    background-color: var(--primary);
+    color: var(--text-light);
+    padding: 1rem ;
+
+}
+
+tbody {
+    background-color: white;
+}
+
+th {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+}
+
+thead tr > :first-child {
+    border-top-left-radius: 8px;
+}
+
+thead tr > :last-child {
+    border-top-right-radius: 8px ;
+}
+
+td {
+    padding: 0.9rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+tbody tr {
+    border-bottom: 1px solid #E5E7EB;
+}
+
+/* NOTE: hardcodes row 6 as the "last row" for rounded bottom corners —
+   only looks right when there are exactly 6 rows on the page. Worth
+   revisiting once pagination controls how many rows actually render. */
+tbody :nth-child(6) > :last-child {
+    border-bottom-right-radius: 8px;
+}
+
+
+tbody :nth-child(6) > :first-child {
+    border-bottom-left-radius: 8px;
+}
+
+
+/* --- Cash In / Cash Out styling — colored type/amount cells + the
+   up/down arrow icon next to "Cash In"/"Cash Out" in the table row.
+   Applied in script.js's renderTransactions(). --- */
+.text-green,
+.text-red {
+    font-weight: 600;
+}
+
+.text-green {
+    color: #16A34A;
+}
+
+.text-red {
+    color: var(--error-red);
+}
+
+/* Icon PNGs ship black by default — these filters recolor them to
+   match .text-green/.text-red without needing separate colored assets. */
+.arrow-up-icon,
+.arrow-down-icon {
+    object-fit: contain;
+    height: 20px;
+    width: 20px;
+}
+
+.arrow-up-icon {
+    filter: invert(39%) sepia(73%) saturate(1000%) hue-rotate(103deg) brightness(90%) contrast(90%);
+}
+
+.arrow-down-icon {
+    filter: invert(25%) sepia(89%) saturate(2864%) hue-rotate(343deg) brightness(89%) contrast(93%);
+}
+
+/* Layout for the Transaction Type cell: centers the icon+label pair
+   in the <td>, then lines them up left-to-right at a fixed width so
+   "Cash In" and "Cash Out" don't shift the column width between rows. */
+.transac-type-td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.transac-type-inner-div {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 8px;
+}
+
+
+/* =====================================================================
+   TRANSACTION RECORDS — "No Transaction Records Found" empty state
+   ===================================================================== */
+
+.no-transactions {
+    min-height: 390px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+    gap: 0.5rem;
+
+    background-color: var(--text-light);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+
+    text-align: center;
+}
+
+.no-transaction-icon-container {
+    background-color: #EFEEF2;
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem;
+    
+}
+
+.no-transactions img {
+    width: 6rem;
+    height: 6rem;
+    object-fit: contain;
+
+}
+
+.no-transactions h3 {
+    font-size: 2rem;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.no-transactions p {
+    font-size: 1.1rem;
+    line-height: 1.8rem;
+
+    margin-bottom: 1rem;
+
+    color: var(--text-secondary);
+}
+
+.no-transactions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .65rem;
+
+    width: 14rem;
+    height: 3.5rem;
+
+    border: 2px solid #2962FF;
+    border-radius: .85rem;
+
+    background: white;
+
+    color: #2962FF;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transition-smooth);
+}
+
+.no-transactions button img {
+    width: 1.2rem;
+    height: 1.2rem;
+    filter: brightness(0) saturate(100%) invert(32%) sepia(98%) saturate(3138%) hue-rotate(221deg) brightness(99%) contrast(102%);
+    margin: 0;
+}
+
+.no-transactions button:hover {
+    background: #2962FF;
+    color: white;
+}
+
+.no-transactions button:active {
+    transform: translateY(1px); 
+    filter: brightness(0.9); 
+}
+
+.no-transactions button:hover img {
+    filter: brightness(0) invert(1);
+}
+
+/* =====================================================================
+   TRANSACTION RECORDS — pagination bar
+   ===================================================================== */
+
+/* Outer pill: holds the prev arrow, the numbered pages, and next arrow */
+.bar-third-width {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: .75rem;
+    background-color: white ;
+    padding: 0.4rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Wrapper around just the numbered page buttons (excludes the arrows) */
+#pagination-pages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: .4rem;
+}
+
+/* Individual page-number button. ".active-page-num" (bottom of this
+   section) marks whichever one matches the current page. */
+.pagination-page {
+    width: 2rem;
+    aspect-ratio: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: .6rem;
+
+    background: transparent;
+
+    color: var(--text-primary);
+
+    font-size: .9rem;
+
+    cursor: pointer;
+
+    transition: background-color .2s ease,
+                color .2s ease;
+}
+
+
+/* Prev (<) / Next (>) arrow buttons. Disabled state is toggled from
+   script.js via updatePaginationArrows(). */
+.pagination-arrow {
+    width: 2rem;
+    aspect-ratio: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: .6rem;
+
+    background: transparent;
+
+    color: var(--text-primary);
+
+    font-size: 0.9rem;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    transition: background-color .2s ease,
+                color .2s ease,
+                opacity .2s ease;
+}
+
+.pagination-arrow:hover:not(:disabled) {
+    background-color: #EEF4FF;
+    color: var(--primary-blue);
+}
+
+.pagination-arrow:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+/* Highlights whichever .pagination-page button is the current page */
+.active-page-num {
+    background-color: var(--accent);
+}
+
+
+/* =====================================================================
+   SHARED / UTILITY — input error states
+   ===================================================================== */
+/* Toggled by blurError() in script.js on any form field — used across
+   the Log Transaction form fields AND the custom date-range popup's
+   Start/End Date inputs, so it lives here rather than under one
+   specific section. */
+.input-error {
+    border: 2px solid var(--error-red) !important;
+    transition: var(--transition-smooth);
+}
+
+.input-error-label {
+    color: var(--error-red) !important;
+    transition: var(--transition-smooth);
+}
+
+/* ============================================================
+   ACCUMULATED PROFIT — LAYOUT FOUNDATION
+   ============================================================ */
+
+
+/* =========================
+   SM — Date + Controls
+   ========================= */
+
+.secondary-bar-full-width-sm {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+}
+
+
+/* =========================
+   SM — Children
+   ========================= */
+
+.profit-date-container {
+    width:250px;
+    min-height: 42px;
+    background-color: white;
+    justify-content: flex-start;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+}
+
+
+/* =========================
+   MD — Summary Cards
+   ========================= */
+
+.secondary-bar-full-width-md {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.profit-summary-card {
+    min-height: 120px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   XL — Charts
+   ========================= */
+
+.secondary-bar-full-width-xl {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.profit-chart-large {
+    min-height: 255px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.profit-chart-small {
+    min-height: 255px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   LG — Breakdown
+   ========================= */
+
+.secondary-bar-full-width-lg {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.profit-breakdown-card {
+    min-height: 200px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+
+.profit-period-controls {
+    width:fit-content;
+    min-height: 42px;
+    background-color: var(--bg-main);
+    justify-content: flex-end;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+
+    display: flex;
+    gap: 0.2rem;
+    padding: 0.1rem;
+}
+
+
+.profit-period-btn {
+    margin: auto;
+    min-width: 95px;
+    padding: 0.5rem;
+    height: 2.2rem;
+    background-color: var(--text-light);
+    border: none;
+    border-radius: 6px;
+    transition: var(--transition-smooth);
+}
+
+.profit-period-btn:hover {
+    cursor: pointer;
+    background-color: var(--bg-main);
+}
+
+.profit-period-btn:active {
+    transform: translateY(1px); 
+    filter: brightness(0.9);    
+}
+
+.profit-period-btn-active,
+.profit-period-btn-active:hover {
+    background-color: var(--accent);
+    transform: scale(1.03);
+}
+
+.profit-summary-card {
+    min-width: 0;
+    min-height: 135px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    background-color: #FFFFFF;
+
+    border: 1px solid #E8EAF0;
+    border-radius: 14px;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   Upper Section
+   ========================= */
+
+.profit-summary-upper {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+/* =========================
+   Icon Container
+   ========================= */
+
+.profit-summary-icon {
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+}
+
+
+/* =========================
+   Icon
+   ========================= */
+
+.profit-summary-icon img {
+    width: 25px;
+    height: 25px;
+
+    object-fit: contain;
+}
+
+
+/* =========================
+   Text Content
+   ========================= */
+
+.profit-summary-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+/* =========================
+   Label
+   ========================= */
+
+.profit-summary-label {
+    margin: 0;
+
+    color: #172B4D;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+
+    line-height: 1.2;
+}
+
+
+/* =========================
+   Value
+   ========================= */
+
+.profit-summary-value {
+    margin: 0;
+
+    color: #14294B;
+
+    font-size: 1.55rem;
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   Change / Comparison
+   ========================= */
+
+.profit-summary-change {
+    margin: 0;
+
+    font-size: 0.78rem;
+    font-weight: 500;
+
+    line-height: 1.2;
+}
+
+
+/* ============================================================
+   CASH IN
+   ============================================================ */
+
+.profit-summary-card--cash-in {
+    background-color: #EEF9F0;
+    border-color: #CFE8D3;
+}
+
+.profit-summary-card--cash-in .profit-summary-icon {
+    background-color: #E8F6EA;
+}
+
+
+/* ============================================================
+   CASH OUT
+   ============================================================ */
+
+.profit-summary-card--cash-out {
+    background-color: #FEF0F0;
+    border-color: #F1CCCC;
+}
+
+.profit-summary-card--cash-out .profit-summary-icon {
+    background-color: #FBDDDD;
+}
+
+
+
+/* ============================================================
+   SERVICE FEES
+   ============================================================ */
+
+.profit-summary-card--service-fee {
+    background-color: #EEF6FC;
+    border-color: #C9E0F2;
+}
+
+.profit-summary-card--service-fee .profit-summary-icon {
+    background-color: #E8F2FC;
+}
+
+

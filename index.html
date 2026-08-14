@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>E-Lista</title>
+</head>
+
+<body>
+    <!-- ============================================================ -->
+    <!-- SIDEBAR — brand mark + section navigation                    -->
+    <!-- ============================================================ -->
+    <aside class="full-height-bar">
+
+        <!-- Brand mark + greeting -->
+        <div class="horizontal-bar-sm">
+            <div class="icon-container-circular">
+              <img src="images/user-profile-icon.png" class="icon-inverted-color" alt="user profile">
+            </div>
+            <div class="square-sm">
+                <h1 class="golden-md-text">E-Lista</h1>
+                <h4 class="text-xxs">Good Morning, User!</h4>
+            </div>
+        </div>
+
+        <!-- Nav buttons — one per app section below. script.js toggles
+             "active" here and "hidden" on the matching <section>. -->
+        <div class="vertical-bar-sm">
+            <button id="dashboard-nav-button" class="horizontal-bar-xs active">
+                <img src="images/dashboard-nav-icon.png" class="icon-sm" alt="">
+                <span class="text-sm">Dashboard</span>
+            </button>
+            <button id="log-transaction-nav-button" class="horizontal-bar-xs">
+                <img src="images/log-transaction-nav-icon.png" class="icon-sm" alt="">
+                <span class="text-sm">Log Transaction</span>
+            </button>
+            <button id="transaction-records-nav-button" class="horizontal-bar-xs">
+                <img src="images/transaction-records-nav-icon.png" class="icon-sm" alt="">
+                <span class="text-sm">Transaction Records</span>
+            </button>
+            <button id="accumulated-profit-nav-button" class="horizontal-bar-xs">
+                <img src="images/accumulated-profit-nav-icon.png" class="icon-sm" alt="">
+                <span class="text-sm">Accumulated Profit</span>
+            </button>
+            <button id="settings-nav-button" class="horizontal-bar-xs">
+                <img src="images/settings-nav-icon.png" class="icon-sm" alt="">
+                <span class="text-sm">Settings</span>
+            </button>
+            <button id="logout-nav-button" class="horizontal-bar-xs">
+                <img src="images/logout-nav-icon.png" class="icon-sm" alt="">
+                <span class="text-sm">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ============================================================ -->
+    <!-- MAIN VIEWPORT — one <section> per nav item. Only one is       -->
+    <!-- visible at a time; script.js controls this via .hidden.       -->
+    <!-- ============================================================ -->
+    <main class="main-viewport">
+
+        <!-- DASHBOARD — placeholder, not yet built -->
+        <section id="dashboard-section">
+            <h1>Dashboard</h1>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- LOG TRANSACTION — form for recording a cash-in/cash-out   -->
+        <!-- ======================================================== -->
+        <section id="log-transaction-section" class="secondary-viewport hidden">
+
+            <!-- Page header banner -->
+            <header class="section-header">
+                <div class="section-header-content">
+                    <div class="circle-md">
+                        <img src="images/log-transaction-md-icon.png" class="icon-md" alt="">
+                    </div>
+                    <div class="square-md">
+                        <h1 class="text-navy-lg">Log Transaction</h1>
+                        <h3>Record cash-ins and cash-outs.<br>
+                            Every transaction is automatically stored.
+                        </h3>
+                    </div>
+                </div>
+                <div class="square-lg">
+                    <img src="images/header-design-icon.png" class="icon-lg" alt="" >
+                </div>
+            </header>
+
+            <!-- Transaction form. Every input here has a matching entry
+                 in inputMapInfo (script.js) for validation on save. -->
+            <div class="form-card-content">
+                <h2 class="text-navy-md">Transaction Details</h2>
+                <div class="form-grid">
+                    <div class="form-width-input-md-box">
+                        <label id="transaction-type-label" for="transaction-type-input" class="form-label">Transaction Type</label>
+                        <select id="transaction-type-input" class="form-width-input">
+                            <option value="" disabled selected hidden></option>
+                            <option value="cash-in">Cash-In</option>
+                            <option value="cash-out">Cash-Out</option>
+                        </select>
+                    </div>
+                    <div class="form-width-input-md-box">
+                        <label for="mobile-number-input" id="mobile-number-label" class="form-label">Mobile Number</label>
+                        <input type="text" id="mobile-number-input" class="form-width-input" placeholder="0912 345 6789">
+                    </div>
+                    <div class="form-width-input-md-box">
+                        <label for="service-fee-input" id="service-fee-label" class="form-label">Service Fee Amount (₱)</label>
+                        <input type="text" id="service-fee-input" min="0" step="0.01" class="form-width-input" placeholder="₱00.00">
+                    </div>
+                    <div class="form-width-input-md-box">
+                        <label for="transaction-amount-input" id="transaction-amount-label" class="form-label">Transaction Amount (₱)</label>
+                        <input type="text" id="transaction-amount-input" min="0" step="0.01" class="form-width-input" placeholder="₱00.00">
+                    </div>
+                    <div class="form-width-input-md-box">
+                        <label for="reference-number-input" id="reference-number-label" class="form-label">Reference Number</label>
+                        <input type="text" id="reference-number-input" class="form-width-input" placeholder="1234 123 123456">
+                    </div>
+                </div>
+                <button id="save-transaction-button" class="form-width-gold-button">Save Transaction</button>
+            </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TRANSACTION RECORDS — filterable/searchable table of all  -->
+        <!-- saved transactions. See applyFilters() in script.js.      -->
+        <!-- ======================================================== -->
+        <section id="transaction-records-section" class="secondary-viewport-compact hidden">
+            <!-- Page header banner -->
+            <header class="section-header-compact">
+                <div class="section-header-content-compact">
+                    <div class="circle-md">
+                        <img src="images/transaction-records-md-icon.png" class="icon-md-compact" alt="">
+                    </div>
+                    <!-- NOTE: "Transasction" is misspelled here — leaving
+                         as-is since this pass is reorganization/comments
+                         only, flagging in case you want it fixed later. -->
+                    <div class="square-md-compact">
+                        <h1 class="text-navy-lg">Transasction Records</h1>
+                        <h3>Browse, search, filter every transaction.<br>
+                            Quickly find any record you've processed.
+                        </h3>
+                    </div>
+                </div>
+                <div class="square-lg">
+                    <img src="images/header-design-icon.png" class="icon-lg-compact" alt="" >
+                </div>
+            </header>
+            <!-- Filter bar: date range, transaction type, and search —
+                 each narrows the table further, left to right. -->
+            <div class="secondary-bar-full-width">
+
+                <!-- Date filter. Picking "Custom Range" opens the popup
+                     below instead of filtering immediately (see script.js). -->
+                <div class="horizontal-bar-md">
+                    <label for="date-filter-select" class="filter-label">Filter by Date</label>
+                    <select name="" id="date-filter-select" class="rectangle-container-md">
+                        <option value="all-transactions">All transactions</option>
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="last-7-days">Last 7 Days</option>
+                        <option value="last-30-days">Last 30 Days</option>
+                        <option value="this-month">This Month</option>
+                        <option value="last-month">Last Month</option>
+                        <option value="custom-range" id="custom-range-option">Custom Range</option>
+                    </select>
+                </div>
+
+                <!-- Transaction type filter (Cash In / Cash Out) -->
+                <div class="horizontal-bar-md">
+                    <label for="transaction-filter-select" class="filter-label">Filter by Transaction</label>
+                    <select name="" id="transaction-filter-select" class="rectangle-container-md">
+                        <option value="all-transaction-types">All Transaction Types</option>
+                        <option value="cash-in">Cash In</option>
+                        <option value="cash-out">Cash Out</option>
+                    </select>
+                </div>
+
+                <!-- Search by mobile number or reference number. Formats
+                     as you type (same grouping as those two fields) so it
+                     can be compared directly against the stored values. -->
+                <div class="horizontal-bar-md">
+                    <label for="search-filter-input" class="filter-label">Search</label>
+                    <input type="search" id="search-filter-input" class="rectangle-container-md filter-search" placeholder="Search by Mobile or Reference Number">
+                </div>
+            </div>
+
+            <!-- Transaction Records Table -->
+            <div id="transaction-table-container" class="table-md">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Transaction Type</th>
+                            <th>Mobile Number</th>
+                            <th>Reference Number</th>
+                            <th>Amount (₱)</th>
+                            <th>Service Fee (₱)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaction-table-body">    
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination bar. Page-number buttons are generated into
+                 #pagination-pages at runtime by renderPaginationNumbers()
+                 in script.js — this stays empty in the markup. -->
+            <div id="pagination-bar" class="bar-third-width hidden">
+                <button id="prev-page-arrow-button" class="pagination-arrow">&lt;</button>
+    
+                <div id="pagination-pages">
+                </div>
+
+                <button id="next-page-arrow-button" class="pagination-arrow">&gt;</button>
+            </div>
+
+            <div id="no-transaction-visual-container" class="no-transactions hidden">
+                <div class="no-transaction-icon-container">
+                    <img src="images/no-transaction-icon.png" alt="">
+                </div>
+                <h3>No Transaction Records Found</h3>
+                <p>
+                    There are no transactions to display
+                    <br>
+                    for the selected filters.
+                </p>
+                <button id="clear-filters-button">
+                    <img src="images/clear-icon.png" alt="">
+                    Clear Filters
+                </button>
+            </div>
+        </section>
+
+        <!-- ACCUMULATED PROFIT — placeholder, not yet built -->
+        <section id="accumulated-profit-section" class="secondary-viewport-compact hidden">
+
+        <div class="secondary-bar-full-width-sm">
+            <div class="profit-date-container"></div>
+
+            <div class="profit-period-controls">
+                <button id="all-transactions-button" class="profit-period-btn profit=per">All Transactions</button>
+                <button id="today-button" class="profit-period-btn">Today</button>
+                <button id="yesterday-button" class="profit-period-btn">Yesterday</button>
+                <button id="last-7-days-button" class="profit-period-btn">Last 7 Days</button>
+                <button id="last-30-days-button" class="profit-period-btn">Last 30 Days</button>
+                <button id="this-month-button" class="profit-period-btn">This Month</button>
+                <button id="last-month-button" class="profit-period-btn">Last Month</button>
+                <button id="custom-range-button" class="profit-period-btn">Custom Range</button>
+            </div>
+        </div>
+
+        <div class="secondary-bar-full-width-md">
+            <div id="total-cash-in-container" class="profit-summary-card profit-summary-card--cash-in">
+                <div class="profit-summary-upper">
+                    <div class="profit-summary-icon">
+                        <img src="/images/cash-in-up.png" alt="">
+                    </div>
+
+                    <div class="profit-summary-content">
+                        <h6 class="profit-summary-label">Total Cash In</h6>
+                        <h3 id="cash-in-display-total" class="profit-summary-value"></h3>
+                    </div>
+                </div>
+
+                <p class="profit-summary-change"></p>
+            </div>
+
+
+            <div id="total-cash-out-container" class="profit-summary-card profit-summary-card--cash-out">
+                <div class="profit-summary-upper">
+                    <div class="profit-summary-icon">
+                        <img src="/images/cash-out-down.png" alt="">
+                    </div>
+
+                    <div class="profit-summary-content">
+                        <h6 class="profit-summary-label">Total Cash Out</h6>
+                        <h3 id="cash-out-display-total" class="profit-summary-value"></h3>
+                    </div>
+                </div>
+
+                <p class="profit-summary-change"></p>
+            </div>
+
+
+            <div id="total-service-fee-container" class="profit-summary-card profit-summary-card--service-fee">
+                <div class="profit-summary-upper">
+                    <div class="profit-summary-icon">
+                        <img src="/images/peso-sign.png" alt="">
+                    </div>
+
+                    <div class="profit-summary-content">
+                        <h6 class="profit-summary-label">Total Service Fees</h6>
+                        <h3 id="service-fee-display-total" class="profit-summary-value"></h3>
+                    </div>
+                </div>
+
+                <p class="profit-summary-change"></p>
+            </div>
+
+        </div>
+
+            <div class="secondary-bar-full-width-xl">
+                <div class="profit-chart-large"></div>
+                <div class="profit-chart-small"></div>
+            </div>
+
+            <div class="secondary-bar-full-width-lg">
+                <div class="profit-breakdown-card"></div>
+                <div class="profit-breakdown-card"></div>
+            </div>
+
+            </div>
+        </section>
+
+        <!-- SETTINGS — placeholder, not yet built -->
+        <section id="settings-section" class="hidden">
+            <h1>Settings</h1>
+        </section>
+
+        <!-- LOGOUT — placeholder, not yet built -->
+        <section id="logout-section" class="hidden">
+            <h1>Logout</h1>
+        </section>
+    </main>
+
+
+    <dialog id="confirmation-modal" class="modal-card-centered">
+        <div class="modal-card-content">
+            <h2>Review Transaction</h2>
+            <dl>
+                <div class="modal-width-box">
+                    <dt>Transaction Type:</dt>
+                    <dd id="modal-transaction-type-display"></dd>
+                </div>
+                <div class="modal-width-box">
+                    <dt>Mobile Number:</dt>
+                    <dd id="modal-mobile-display"></dd>
+                </div>
+                <div class="modal-width-box">
+                    <dt>Transaction Amount (₱):</dt>
+                    <dd id="modal-transaction-amount-display"></dd>
+                </div>
+                <div class="modal-width-box">
+                    <dt>Service Fee Amount (₱):</dt>
+                    <dd id="modal-service-fee-display"></dd>
+                </div>
+                <div class="modal-width-box">
+                    <dt>Reference Number:</dt>
+                    <dd id="modal-reference-display"></dd>
+                </div>
+            </dl>
+            <div class="buttons-container-rectangle">
+                <button id="cancel-transaction-button" class="button-md-navy">Cancel</button>
+                <button id="confirm-transaction-button" class="button-md-gold">Confirm</button>
+            </div>
+        </div>
+    </dialog>
+
+    <div id="custom-range-popup" class="popup-sm hidden">
+        <div>
+            <label for="start-date-input" id="start-date-label">Starting Date</label>
+            <input type="date" id="start-date-input">
+        </div>
+        
+        <div>
+            <label for="end-date-input" id="end-date-label">End Date</label>
+            <input type="date" id="end-date-input">
+        </div>
+
+        <button id="custom-range-apply-button">Apply</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
