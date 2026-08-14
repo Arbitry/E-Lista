@@ -200,7 +200,8 @@ function saveToLocalStorage () {
 // section is ever visible at a time.
 function switchSections(showSection) {
     for (const section of sections) {
-        section.classList.add("hidden")
+        section.classList.add("hidden") 
+        customRangePopup.classList.add("hidden")
     }
     showSection.classList.remove("hidden")
 }
@@ -857,6 +858,7 @@ function getFilteredArray() {
 dateFilterSelect.addEventListener("change", () => {
     if (dateFilterSelect.value === "custom-range") {
         customRangePopup.classList.remove("hidden")
+        setCustomDatePosition(dateFilterSelect, "left")
     }
     else {
         customRangePopup.classList.add("hidden")
@@ -1071,10 +1073,26 @@ function renderSumTotalInCards(transactionArray) {
 function switchPeriodBtnActive(showPeriodBtn) {
     for (const periodBtn of periodBtns) {
         periodBtn.classList.remove("profit-period-btn-active")
+        customRangePopup.classList.add("hidden")
     }
     showPeriodBtn.classList.add("profit-period-btn-active")
 }
 
+function setCustomDatePosition(parentElement, horizontalPosition) {
+    const elementBox = parentElement.getBoundingClientRect();
+
+    customRangePopup.style.top = `${elementBox.bottom + 8}px`;
+
+    if (horizontalPosition === "left") {
+        customRangePopup.style.left = `${elementBox.left}px`;
+        customRangePopup.style.right = "";
+    }
+    else if (horizontalPosition === "right") {
+        customRangePopup.style.right = `${window.innerWidth - elementBox.right}px`;
+        customRangePopup.style.left = "";
+    }
+}
+    
 allTransacBtn.addEventListener("click", () => {
     renderSumTotalInCards(transactions)
     switchPeriodBtnActive(allTransacBtn)
@@ -1115,6 +1133,9 @@ lastMonthBtn.addEventListener("click", () => {
 
 customRangePeriodBtn.addEventListener("click", () => {
     switchPeriodBtnActive(customRangePeriodBtn)
+    customRangePopup.classList.remove("hidden")
+    setCustomDatePosition(customRangePeriodBtn, "right")
+    
 
 })
 

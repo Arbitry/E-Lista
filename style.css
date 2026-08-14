@@ -651,17 +651,12 @@ label,
 
 /* Custom date range popup — hidden/shown via the "hidden" utility class
    in response to the date-filter dropdown (see script.js) */
-.popup-sm {
-    position: absolute;
-
-    top: calc(100% + 0.5rem);
-    left: 0;
-
+.popup-sm { 
+    position: fixed;
     display: flex;
     flex-direction: column;
 
-    width: 100%;
-
+    width: 344.475px;
     background: white;
 
     border: 1px solid var(--border-gray);
@@ -673,6 +668,7 @@ label,
     box-shadow: var(--shadow-lg);
 
     z-index: 100;
+    margin-right: auto;
 }
 
 .popup-sm > div {
