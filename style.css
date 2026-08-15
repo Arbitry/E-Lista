@@ -30,7 +30,7 @@
    GLOBAL RESET & BASE LAYOUT
    ===================================================================== */
 * {
-    /* outline: 2px solid red; */
+    outline: 2px solid red;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -1062,9 +1062,8 @@ tbody :nth-child(6) > :first-child {
 
 .secondary-bar-full-width-sm {
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
+    display: flex;
+    justify-content: space-between;
     gap: 20px;
 }
 
@@ -1353,4 +1352,11 @@ tbody :nth-child(6) > :first-child {
 
 .profit-summary-card--service-fee .profit-summary-icon {
     background-color: #E8F2FC;
+}
+
+.popup-analytics {
+    position: absolute;
+    width: 500px;
+
+    background-color: red;
 }
