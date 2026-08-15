@@ -168,8 +168,24 @@
                         <option value="last-month">Last Month</option>
                         <option value="custom-range" id="custom-range-option">Custom Range</option>
                     </select>
+
+                     <div id="custom-range-popup" class="popup-sm hidden">
+                        <div>
+                            <label for="start-date-input" id="start-date-label">Starting Date</label>
+                            <input type="date" id="start-date-input">
+                        </div>
+                        
+                        <div>
+                            <label for="end-date-input" id="end-date-label">End Date</label>
+                            <input type="date" id="end-date-input">
+                        </div>
+
+                        <button id="custom-range-apply-button">Apply</button>
+                    </div>
+
                 </div>
 
+               
                 <!-- Transaction type filter (Cash In / Cash Out) -->
                 <div class="horizontal-bar-md">
                     <label for="transaction-filter-select" class="filter-label">Filter by Transaction</label>
@@ -360,21 +376,6 @@
             </div>
         </div>
     </dialog>
-
-    <div id="custom-range-popup" class="popup-sm hidden">
-        <div>
-            <label for="start-date-input" id="start-date-label">Starting Date</label>
-            <input type="date" id="start-date-input">
-        </div>
-        
-        <div>
-            <label for="end-date-input" id="end-date-label">End Date</label>
-            <input type="date" id="end-date-input">
-        </div>
-
-        <button id="custom-range-apply-button">Apply</button>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>

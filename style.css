@@ -652,7 +652,10 @@ label,
 /* Custom date range popup — hidden/shown via the "hidden" utility class
    in response to the date-filter dropdown (see script.js) */
 .popup-sm { 
-    position: fixed;
+    position: absolute;
+
+    top: calc(100% + 1rem);
+    left: 0;
     display: flex;
     flex-direction: column;
 
@@ -1351,5 +1354,3 @@ tbody :nth-child(6) > :first-child {
 .profit-summary-card--service-fee .profit-summary-icon {
     background-color: #E8F2FC;
 }
-
-

@@ -201,7 +201,6 @@ function saveToLocalStorage () {
 function switchSections(showSection) {
     for (const section of sections) {
         section.classList.add("hidden") 
-        customRangePopup.classList.add("hidden")
     }
     showSection.classList.remove("hidden")
 }
@@ -858,7 +857,6 @@ function getFilteredArray() {
 dateFilterSelect.addEventListener("change", () => {
     if (dateFilterSelect.value === "custom-range") {
         customRangePopup.classList.remove("hidden")
-        setCustomDatePosition(dateFilterSelect, "left")
     }
     else {
         customRangePopup.classList.add("hidden")
@@ -880,8 +878,9 @@ searchFilterInput.addEventListener("input", () => {
 // Applying a custom range dynamically injects/updates a temporary
 // "active-custom-range" <option> in the dropdown itself, so the picked
 // range shows up as the selected label (e.g. "Jan 1, 2026 - Jan 7, 2026").
-customRangeBtn.addEventListener("click", () => {
-    if (!startDateInput.value || !endDateInput.value) {
+
+function setCustomDate() {
+        if (!startDateInput.value || !endDateInput.value) {
         blurError(true, startDateInput, startDateLabel, "Starting", "Date")
         blurError(true, endDateInput, endDateLabel, "End", "Date")
         return
@@ -925,6 +924,12 @@ customRangeBtn.addEventListener("click", () => {
     renderTransactionTable()
 
     customRangePopup.classList.add("hidden")
+}
+
+
+
+customRangeBtn.addEventListener("click", () => {
+    setCustomDate()
 })
 
 startDateInput.addEventListener("focus", () => {
@@ -1051,6 +1056,7 @@ function getTransactionAmountTotal(dateFilteredArray, transacTypeString) {
             transactionAmount = transactionAmount + parseFloat(transaction.transactionAmount.replace(/,/g, ""))
         }
     }
+    
     return transactionAmount
 }
 
@@ -1065,34 +1071,19 @@ function getServiceFeeTotal(dateFilteredArray) {
 
 
 function renderSumTotalInCards(transactionArray) {
-    cashInDisplayTotal.textContent = getTransactionAmountTotal(transactionArray, "cash-in")
-    cashOutDisplayTotal.textContent  = getTransactionAmountTotal(transactionArray, "cash-out")
-    serviceFeeDisplayTotal.textContent = getServiceFeeTotal(transactionArray)
+    cashInDisplayTotal.textContent = `₱${inputAmountFormat(getTransactionAmountTotal(transactionArray, "cash-in"))}`
+    cashOutDisplayTotal.textContent  = `₱${inputAmountFormat(getTransactionAmountTotal(transactionArray, "cash-out"))}`
+    serviceFeeDisplayTotal.textContent = `₱${inputAmountFormat(getServiceFeeTotal(transactionArray))}`
 }
 
 function switchPeriodBtnActive(showPeriodBtn) {
     for (const periodBtn of periodBtns) {
         periodBtn.classList.remove("profit-period-btn-active")
-        customRangePopup.classList.add("hidden")
     }
     showPeriodBtn.classList.add("profit-period-btn-active")
 }
 
-function setCustomDatePosition(parentElement, horizontalPosition) {
-    const elementBox = parentElement.getBoundingClientRect();
 
-    customRangePopup.style.top = `${elementBox.bottom + 8}px`;
-
-    if (horizontalPosition === "left") {
-        customRangePopup.style.left = `${elementBox.left}px`;
-        customRangePopup.style.right = "";
-    }
-    else if (horizontalPosition === "right") {
-        customRangePopup.style.right = `${window.innerWidth - elementBox.right}px`;
-        customRangePopup.style.left = "";
-    }
-}
-    
 allTransacBtn.addEventListener("click", () => {
     renderSumTotalInCards(transactions)
     switchPeriodBtnActive(allTransacBtn)
@@ -1133,11 +1124,8 @@ lastMonthBtn.addEventListener("click", () => {
 
 customRangePeriodBtn.addEventListener("click", () => {
     switchPeriodBtnActive(customRangePeriodBtn)
-    customRangePopup.classList.remove("hidden")
-    setCustomDatePosition(customRangePeriodBtn, "right")
-    
-
 })
+
 
 // =====================================================================
 // INITIALIZATION
