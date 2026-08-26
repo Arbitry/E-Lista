@@ -101,6 +101,10 @@ const cashInDisplayTotal = document.getElementById("cash-in-display-total");
 const cashOutDisplayTotal = document.getElementById("cash-out-display-total");
 const serviceFeeDisplayTotal = document.getElementById("service-fee-display-total");
 
+
+const customRangePopupAnalytics = document.getElementById("custom-range-popup-analytics")
+
+
 // =====================================================================
 // APPLICATION STATE
 // =====================================================================
@@ -1081,7 +1085,18 @@ function switchPeriodBtnActive(showPeriodBtn) {
         periodBtn.classList.remove("profit-period-btn-active")
     }
     showPeriodBtn.classList.add("profit-period-btn-active")
+    showCustomRangePopupAnalytics()
 }
+
+function showCustomRangePopupAnalytics() {
+    if(customRangePeriodBtn.classList.contains("profit-period-btn-active")) {
+        customRangePopupAnalytics.classList.remove("hidden")
+    }
+    else {
+        customRangePopupAnalytics.classList.add("hidden")
+    }
+}
+
 
 
 allTransacBtn.addEventListener("click", () => {
