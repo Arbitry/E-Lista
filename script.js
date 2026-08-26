@@ -104,6 +104,14 @@ const serviceFeeDisplayTotal = document.getElementById("service-fee-display-tota
 
 const customRangePopupAnalytics = document.getElementById("custom-range-popup-analytics")
 
+const startDateInputAnalytics = document.getElementById("start-date-input-analytics")
+const startDateLabelAnalytics = document.getElementById("start-date-label-analytics")
+const endDateInputAnalytics = document.getElementById("end-date-input-analytics")
+const endDateLabelAnalytics = document.getElementById("end-date-label-analytics")
+
+const customRangeBtnAnalytics = document.getElementById("custom-range-apply-button-analytics")
+
+
 
 // =====================================================================
 // APPLICATION STATE
@@ -883,18 +891,25 @@ searchFilterInput.addEventListener("input", () => {
 // "active-custom-range" <option> in the dropdown itself, so the picked
 // range shows up as the selected label (e.g. "Jan 1, 2026 - Jan 7, 2026").
 
-function setCustomDate() {
-        if (!startDateInput.value || !endDateInput.value) {
-        blurError(true, startDateInput, startDateLabel, "Starting", "Date")
-        blurError(true, endDateInput, endDateLabel, "End", "Date")
+
+function initializeCustomDate(startInput, endInput, startLabel, endLabel) {
+    if (!startInput.value || !endInput.value) {
+        blurError(true, startInput, startLabel, "Starting", "Date")
+        blurError(true, endInput, endLabel, "End", "Date")
         return
     }
 
-    const startDate = new Date(startDateInput.value);
-    const endDate = new Date(endDateInput.value);
+    const startDate = new Date(startInput.value);
+    const endDate = new Date(endInput.value);
 
     endDate.setHours(23, 59, 59, 999);
 
+    return {startDate, endDate}
+}
+
+function setCustomDate() {
+    const {startDate, endDate} = initializeCustomDate(startDateInput, endDateInput, startDateLabel, endDateLabel)
+  
     const formattedStart = startDate.toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
@@ -1140,6 +1155,21 @@ lastMonthBtn.addEventListener("click", () => {
 customRangePeriodBtn.addEventListener("click", () => {
     switchPeriodBtnActive(customRangePeriodBtn)
 })
+
+customRangeBtnAnalytics.addEventListener("click", () => {
+    const {startDate, endDate} = 
+        initializeCustomDate(startDateInputAnalytics, endDateInputAnalytics, startDateLabelAnalytics, endDateLabelAnalytics)
+    renderSumTotalInCards(getCustomRangeTransactions(transactions, startDate, endDate))
+})
+
+startDateInputAnalytics.addEventListener("focus", () => {
+    blurError(false, startDateInput, startDateLabel, "Starting", "Date")
+})
+
+endDateInputAnalytics.addEventListener("focus", () => {
+    blurError(false, endDateInput, endDateLabel, "End", "Date")
+})
+
 
 
 // =====================================================================
