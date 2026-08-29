@@ -112,6 +112,7 @@ const endDateLabelAnalytics = document.getElementById("end-date-label-analytics"
 const customRangeBtnAnalytics = document.getElementById("custom-range-apply-button-analytics")
 
 const profitDateContainer = document.getElementById("profit-date-container")
+const profitDateDisplay = document.getElementById("profit-date-display")
 
 
 
@@ -1116,7 +1117,7 @@ function showCustomRangePopupAnalytics() {
 
 function displayFormattedDate(periodType) {
     if (periodType === "all-transactions") {
-        profitDateContainer.textContent = "All time"
+        profitDateDisplay.textContent = "All time"
     }
     else if (periodType === "today") {
         const today = new Date().toLocaleDateString("en-US", {
@@ -1124,7 +1125,7 @@ function displayFormattedDate(periodType) {
             day: "numeric",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${today}`
+        profitDateDisplay.textContent = `${today}`
     }
     else if (periodType === "yesterday") {
         let yesterday = new Date()
@@ -1135,7 +1136,7 @@ function displayFormattedDate(periodType) {
             day: "numeric",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${yesterday}`
+        profitDateDisplay.textContent = `${yesterday}`
     }
     else if (periodType === "last7Days") {
         let startDate = new Date()
@@ -1154,7 +1155,7 @@ function displayFormattedDate(periodType) {
             day: "numeric",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${startDate} - ${endDate}`
+        profitDateDisplay.textContent = `${startDate} - ${endDate}`
     }
     else if (periodType === "last30Days") {
         let startDate = new Date()
@@ -1173,7 +1174,7 @@ function displayFormattedDate(periodType) {
             day: "numeric",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${startDate} - ${endDate}`
+        profitDateDisplay.textContent = `${startDate} - ${endDate}`
     }
     else if (periodType === "thisMonth") {
         let thisMonth = new Date()
@@ -1182,7 +1183,7 @@ function displayFormattedDate(periodType) {
             month: "long",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${thisMonth}`
+        profitDateDisplay.textContent = `${thisMonth}`
 
     }
     else if (periodType === "lastMonth") {
@@ -1193,7 +1194,7 @@ function displayFormattedDate(periodType) {
             month: "long",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${lastMonth}`
+        profitDateDisplay.textContent = `${lastMonth}`
     }
     else if (periodType === "customRange") {
         const {startDate, endDate} = 
@@ -1210,7 +1211,7 @@ function displayFormattedDate(periodType) {
             day: "numeric",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${formattedStart} - ${formattedEnd}`
+        profitDateDisplay.textContent = `${formattedStart} - ${formattedEnd}`
     }
 }
 

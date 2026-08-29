@@ -30,7 +30,7 @@
    GLOBAL RESET & BASE LAYOUT
    ===================================================================== */
 * {
-    outline: 2px solid red;
+    /* outline: 2px solid red; */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -1422,4 +1422,21 @@ tbody :nth-child(6) > :first-child {
 .popup-sm-analytics button:active {
     transform: translateY(1px); 
     filter: brightness(0.9);
+}
+
+.profit-date-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 0.5rem;
+    padding-left: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.date-icon {
+    object-fit: contain;
+    height: 20px;
+    width: 20px;
 }
