@@ -1114,17 +1114,103 @@ function showCustomRangePopupAnalytics() {
     }
 }
 
-function displayFormattedDate(periodType, date) {
+function displayFormattedDate(periodType) {
     if (periodType === "all-transactions") {
         profitDateContainer.textContent = "All time"
     }
-    else if (periodType === "single-date") {
-        const formattedStart = date.toLocaleDateString("en-US", {
+    else if (periodType === "today") {
+        const today = new Date().toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",
             year: "numeric"
         })
-        profitDateContainer.textContent = `${formattedStart}`
+        profitDateContainer.textContent = `${today}`
+    }
+    else if (periodType === "yesterday") {
+        let yesterday = new Date()
+        yesterday.setDate(yesterday.getDate() - 1)
+
+        yesterday = yesterday.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        })
+        profitDateContainer.textContent = `${yesterday}`
+    }
+    else if (periodType === "last7Days") {
+        let startDate = new Date()
+        startDate.setDate(startDate.getDate() - 7)
+
+        let endDate = new Date()
+
+        startDate = startDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        })
+
+        endDate = endDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        })
+        profitDateContainer.textContent = `${startDate} - ${endDate}`
+    }
+    else if (periodType === "last30Days") {
+        let startDate = new Date()
+        startDate.setDate(startDate.getDate() - 30)
+
+        let endDate = new Date()
+
+        startDate = startDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        })
+
+        endDate = endDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        })
+        profitDateContainer.textContent = `${startDate} - ${endDate}`
+    }
+    else if (periodType === "thisMonth") {
+        let thisMonth = new Date()
+
+        thisMonth = thisMonth.toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric"
+        })
+        profitDateContainer.textContent = `${thisMonth}`
+
+    }
+    else if (periodType === "lastMonth") {
+        let lastMonth = new Date()
+        lastMonth.setMonth(lastMonth.getMonth() - 1)
+
+        lastMonth = lastMonth.toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric"
+        })
+        profitDateContainer.textContent = `${lastMonth}`
+    }
+    else if (periodType === "customRange") {
+        const {startDate, endDate} = 
+            initializeCustomDate(startDateInputAnalytics, endDateInputAnalytics, startDateLabelAnalytics, endDateLabelAnalytics)
+
+        const formattedStart = startDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        })
+
+        const formattedEnd = endDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        })
+        profitDateContainer.textContent = `${formattedStart} - ${formattedEnd}`
     }
 }
 
@@ -1137,35 +1223,40 @@ allTransacBtn.addEventListener("click", () => {
 todayBtn.addEventListener("click", () => {
     renderSumTotalInCards(getTodayTransactions(transactions))
     switchPeriodBtnActive(todayBtn)
-    displayFormattedDate("single-date", getTodayTransactions(transactions))
+    displayFormattedDate("today")
 });
 
 yesterdayBtn.addEventListener("click", () => {
     renderSumTotalInCards(getYesterdayTransactions(transactions))
     switchPeriodBtnActive(yesterdayBtn)
+    displayFormattedDate("yesterday")
 
 });
 
 last7DaysBtn.addEventListener("click", () => {
     renderSumTotalInCards(getLast7DaysTransactions(transactions))
     switchPeriodBtnActive(last7DaysBtn)
+    displayFormattedDate("last7Days")
 });
 
 last30DaysBtn.addEventListener("click", () => {
     renderSumTotalInCards(getLast30DaysTransactions(transactions))
     switchPeriodBtnActive(last30DaysBtn)
+    displayFormattedDate("last30Days")
 
 });
 
 thisMonthBtn.addEventListener("click", () => {
     renderSumTotalInCards(getThisMonthTransactions(transactions))
     switchPeriodBtnActive(thisMonthBtn)
+    displayFormattedDate("thisMonth")
 
 });
 
 lastMonthBtn.addEventListener("click", () => {
     renderSumTotalInCards(getLastMonthTransactions(transactions))
     switchPeriodBtnActive(lastMonthBtn)
+    displayFormattedDate("lastMonth")
 });
 
 customRangePeriodBtn.addEventListener("click", () => {
@@ -1176,6 +1267,7 @@ customRangeBtnAnalytics.addEventListener("click", () => {
     const {startDate, endDate} = 
         initializeCustomDate(startDateInputAnalytics, endDateInputAnalytics, startDateLabelAnalytics, endDateLabelAnalytics)
     renderSumTotalInCards(getCustomRangeTransactions(transactions, startDate, endDate))
+    displayFormattedDate("customRange")
 })
 
 startDateInputAnalytics.addEventListener("focus", () => {
