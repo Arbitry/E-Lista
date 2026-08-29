@@ -111,6 +111,8 @@ const endDateLabelAnalytics = document.getElementById("end-date-label-analytics"
 
 const customRangeBtnAnalytics = document.getElementById("custom-range-apply-button-analytics")
 
+const profitDateContainer = document.getElementById("profit-date-container")
+
 
 
 // =====================================================================
@@ -1112,16 +1114,30 @@ function showCustomRangePopupAnalytics() {
     }
 }
 
-
+function displayFormattedDate(periodType, date) {
+    if (periodType === "all-transactions") {
+        profitDateContainer.textContent = "All time"
+    }
+    else if (periodType === "single-date") {
+        const formattedStart = date.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        })
+        profitDateContainer.textContent = `${formattedStart}`
+    }
+}
 
 allTransacBtn.addEventListener("click", () => {
     renderSumTotalInCards(transactions)
     switchPeriodBtnActive(allTransacBtn)
+    displayFormattedDate("all-transactions")
 });
 
 todayBtn.addEventListener("click", () => {
     renderSumTotalInCards(getTodayTransactions(transactions))
     switchPeriodBtnActive(todayBtn)
+    displayFormattedDate("single-date", getTodayTransactions(transactions))
 });
 
 yesterdayBtn.addEventListener("click", () => {
@@ -1154,7 +1170,7 @@ lastMonthBtn.addEventListener("click", () => {
 
 customRangePeriodBtn.addEventListener("click", () => {
     switchPeriodBtnActive(customRangePeriodBtn)
-})
+})  
 
 customRangeBtnAnalytics.addEventListener("click", () => {
     const {startDate, endDate} = 
@@ -1163,12 +1179,14 @@ customRangeBtnAnalytics.addEventListener("click", () => {
 })
 
 startDateInputAnalytics.addEventListener("focus", () => {
-    blurError(false, startDateInput, startDateLabel, "Starting", "Date")
+    blurError(false, startDateInputAnalytics, startDateLabelAnalytics, "Starting", "Date")
 })
 
 endDateInputAnalytics.addEventListener("focus", () => {
-    blurError(false, endDateInput, endDateLabel, "End", "Date")
+    blurError(false, endDateInputAnalytics, endDateLabelAnalytics, "End", "Date")
 })
+
+
 
 
 
