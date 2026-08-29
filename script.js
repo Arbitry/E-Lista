@@ -114,6 +114,7 @@ const customRangeBtnAnalytics = document.getElementById("custom-range-apply-butt
 const profitDateContainer = document.getElementById("profit-date-container")
 const profitDateDisplay = document.getElementById("profit-date-display")
 
+const doughnutCanvas = document.getElementById("transaction-doughnut-chart")
 
 
 // =====================================================================
@@ -1219,6 +1220,7 @@ allTransacBtn.addEventListener("click", () => {
     renderSumTotalInCards(transactions)
     switchPeriodBtnActive(allTransacBtn)
     displayFormattedDate("all-transactions")
+    updateDonutChart(transactions)
 });
 
 todayBtn.addEventListener("click", () => {
@@ -1278,6 +1280,24 @@ startDateInputAnalytics.addEventListener("focus", () => {
 endDateInputAnalytics.addEventListener("focus", () => {
     blurError(false, endDateInputAnalytics, endDateLabelAnalytics, "End", "Date")
 })
+
+
+
+function updateDonutChart(transactionArray) {
+    const cashInTotal = getTransactionAmountTotal(transactionArray, "cash-in")
+    const cashOutTotal = getTransactionAmountTotal(transactionArray, "cash-out")
+
+    const doughnutChart = new Chart(doughnutCanvas, {
+    type: "doughnut",
+
+    data: {
+        labels: ["Cash In", "Cash Out"],
+
+        datasets: [{
+            data: [cashInTotal, cashOutTotal]
+        }]
+    }
+})}
 
 
 
