@@ -1316,7 +1316,19 @@ function updateDonutChart(transactionArray) {
                     "#d53e2e"  // Cash Out
                 ]       
             }]
-        }   
+        },
+
+        options: {
+            cutout: "40%",
+
+            plugins: {
+                legend: {
+                    display: false
+                },
+            
+            }
+        }      
+
     })
 }
  
