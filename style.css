@@ -1120,7 +1120,7 @@ tbody :nth-child(6) > :first-child {
 }
 
 .profit-chart-small {
-    min-height: 255px;
+    height: 255px;
     background: #FFFFFF;
     border-radius: 16px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);

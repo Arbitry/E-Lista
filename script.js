@@ -115,6 +115,7 @@ const profitDateContainer = document.getElementById("profit-date-container")
 const profitDateDisplay = document.getElementById("profit-date-display")
 
 const doughnutCanvas = document.getElementById("transaction-doughnut-chart")
+let doughnutChart;
 
 
 // =====================================================================
@@ -251,6 +252,7 @@ accumulatedProfitNavBtn.addEventListener("click", ()=> {
     switchActiveBtn(accumulatedProfitNavBtn)
     renderSumTotalInCards(transactions)
     switchPeriodBtnActive(allTransacBtn)
+    updateDonutChart(transactions)
 })
 
 settingsNavBtn.addEventListener("click", ()=> {
@@ -1227,12 +1229,14 @@ todayBtn.addEventListener("click", () => {
     renderSumTotalInCards(getTodayTransactions(transactions))
     switchPeriodBtnActive(todayBtn)
     displayFormattedDate("today")
+    updateDonutChart(getTodayTransactions(transactions))
 });
 
 yesterdayBtn.addEventListener("click", () => {
     renderSumTotalInCards(getYesterdayTransactions(transactions))
     switchPeriodBtnActive(yesterdayBtn)
     displayFormattedDate("yesterday")
+    updateDonutChart(getYesterdayTransactions(transactions))
 
 });
 
@@ -1240,26 +1244,29 @@ last7DaysBtn.addEventListener("click", () => {
     renderSumTotalInCards(getLast7DaysTransactions(transactions))
     switchPeriodBtnActive(last7DaysBtn)
     displayFormattedDate("last7Days")
+    updateDonutChart(getLast7DaysTransactions(transactions))
+
 });
 
 last30DaysBtn.addEventListener("click", () => {
     renderSumTotalInCards(getLast30DaysTransactions(transactions))
     switchPeriodBtnActive(last30DaysBtn)
     displayFormattedDate("last30Days")
-
+    updateDonutChart(getLast30DaysTransactions(transactions))
 });
 
 thisMonthBtn.addEventListener("click", () => {
     renderSumTotalInCards(getThisMonthTransactions(transactions))
     switchPeriodBtnActive(thisMonthBtn)
     displayFormattedDate("thisMonth")
-
+    updateDonutChart(getThisMonthTransactions(transactions))
 });
 
 lastMonthBtn.addEventListener("click", () => {
     renderSumTotalInCards(getLastMonthTransactions(transactions))
     switchPeriodBtnActive(lastMonthBtn)
     displayFormattedDate("lastMonth")
+    updateDonutChart(getLastMonthTransactions(transactions))
 });
 
 customRangePeriodBtn.addEventListener("click", () => {
@@ -1271,6 +1278,7 @@ customRangeBtnAnalytics.addEventListener("click", () => {
         initializeCustomDate(startDateInputAnalytics, endDateInputAnalytics, startDateLabelAnalytics, endDateLabelAnalytics)
     renderSumTotalInCards(getCustomRangeTransactions(transactions, startDate, endDate))
     displayFormattedDate("customRange")
+    updateDonutChart(getCustomRangeTransactions(transactions, startDate, endDate))
 })
 
 startDateInputAnalytics.addEventListener("focus", () => {
@@ -1287,20 +1295,31 @@ function updateDonutChart(transactionArray) {
     const cashInTotal = getTransactionAmountTotal(transactionArray, "cash-in")
     const cashOutTotal = getTransactionAmountTotal(transactionArray, "cash-out")
 
-    const doughnutChart = new Chart(doughnutCanvas, {
-    type: "doughnut",
+    if (doughnutChart !== undefined) {
+        doughnutChart.data.datasets[0].data = [cashInTotal, cashOutTotal]
+        doughnutChart.update()
 
-    data: {
-        labels: ["Cash In", "Cash Out"],
-
-        datasets: [{
-            data: [cashInTotal, cashOutTotal]
-        }]
+        return
     }
-})}
 
+    doughnutChart = new Chart(doughnutCanvas, {
+        type: "doughnut",
 
+        data: {
+            labels: ["Cash In", "Cash Out"],
 
+            datasets: [{
+                data: [cashInTotal, cashOutTotal],
+
+                backgroundColor: [
+                    "#62c55b", // Cash In
+                    "#d53e2e"  // Cash Out
+                ]       
+            }]
+        }   
+    })
+}
+ 
 
 
 // =====================================================================
