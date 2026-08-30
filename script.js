@@ -118,6 +118,10 @@ const doughnutCanvas = document.getElementById("transaction-doughnut-chart")
 let doughnutChart;
 
 
+const cashInLegendTxt = document.getElementById("cash-in-legend-text")
+const cashOutLegendTxt = document.getElementById("cash-out-legend-text")
+const totalLegendTxt = document.getElementById("total-legend-text")
+
 // =====================================================================
 // APPLICATION STATE
 // =====================================================================
@@ -253,6 +257,8 @@ accumulatedProfitNavBtn.addEventListener("click", ()=> {
     renderSumTotalInCards(transactions)
     switchPeriodBtnActive(allTransacBtn)
     updateDonutChart(transactions)
+    showTransactionAmountLegend(transactions)
+
 })
 
 settingsNavBtn.addEventListener("click", ()=> {
@@ -1101,6 +1107,16 @@ function renderSumTotalInCards(transactionArray) {
     serviceFeeDisplayTotal.textContent = `₱${inputAmountFormat(getServiceFeeTotal(transactionArray))}`
 }
 
+function showTransactionAmountLegend(transactionArray) {
+    const cashInTotal = getTransactionAmountTotal(transactionArray, "cash-in")
+    const cashOutTotal = getTransactionAmountTotal(transactionArray, "cash-out")
+    const total = cashInTotal + cashOutTotal
+
+    cashInLegendTxt.textContent = `₱${inputAmountFormat(cashInTotal)}`
+    cashOutLegendTxt.textContent = `₱${inputAmountFormat(cashOutTotal)}`
+    totalLegendTxt.textContent = `₱${inputAmountFormat(total)}`
+}
+
 function switchPeriodBtnActive(showPeriodBtn) {
     for (const periodBtn of periodBtns) {
         periodBtn.classList.remove("profit-period-btn-active")
@@ -1223,6 +1239,7 @@ allTransacBtn.addEventListener("click", () => {
     switchPeriodBtnActive(allTransacBtn)
     displayFormattedDate("all-transactions")
     updateDonutChart(transactions)
+    showTransactionAmountLegend(transactions)
 });
 
 todayBtn.addEventListener("click", () => {
@@ -1230,6 +1247,8 @@ todayBtn.addEventListener("click", () => {
     switchPeriodBtnActive(todayBtn)
     displayFormattedDate("today")
     updateDonutChart(getTodayTransactions(transactions))
+    showTransactionAmountLegend(getTodayTransactions(transactions))
+
 });
 
 yesterdayBtn.addEventListener("click", () => {
@@ -1237,7 +1256,7 @@ yesterdayBtn.addEventListener("click", () => {
     switchPeriodBtnActive(yesterdayBtn)
     displayFormattedDate("yesterday")
     updateDonutChart(getYesterdayTransactions(transactions))
-
+    showTransactionAmountLegend(getYesterdayTransactions(transactions))
 });
 
 last7DaysBtn.addEventListener("click", () => {
@@ -1245,6 +1264,8 @@ last7DaysBtn.addEventListener("click", () => {
     switchPeriodBtnActive(last7DaysBtn)
     displayFormattedDate("last7Days")
     updateDonutChart(getLast7DaysTransactions(transactions))
+    showTransactionAmountLegend(getLast7DaysTransactions(transactions))
+
 
 });
 
@@ -1253,6 +1274,8 @@ last30DaysBtn.addEventListener("click", () => {
     switchPeriodBtnActive(last30DaysBtn)
     displayFormattedDate("last30Days")
     updateDonutChart(getLast30DaysTransactions(transactions))
+    showTransactionAmountLegend(getLast30DaysTransactions(transactions))
+
 });
 
 thisMonthBtn.addEventListener("click", () => {
@@ -1260,6 +1283,8 @@ thisMonthBtn.addEventListener("click", () => {
     switchPeriodBtnActive(thisMonthBtn)
     displayFormattedDate("thisMonth")
     updateDonutChart(getThisMonthTransactions(transactions))
+    showTransactionAmountLegend(getThisMonthTransactions(transactions))
+
 });
 
 lastMonthBtn.addEventListener("click", () => {
@@ -1267,6 +1292,8 @@ lastMonthBtn.addEventListener("click", () => {
     switchPeriodBtnActive(lastMonthBtn)
     displayFormattedDate("lastMonth")
     updateDonutChart(getLastMonthTransactions(transactions))
+    showTransactionAmountLegend(getLastMonthTransactions(transactions))
+
 });
 
 customRangePeriodBtn.addEventListener("click", () => {
@@ -1279,6 +1306,7 @@ customRangeBtnAnalytics.addEventListener("click", () => {
     renderSumTotalInCards(getCustomRangeTransactions(transactions, startDate, endDate))
     displayFormattedDate("customRange")
     updateDonutChart(getCustomRangeTransactions(transactions, startDate, endDate))
+    showTransactionAmountLegend(getCustomRangeTransactions(transactions, startDate, endDate))
 })
 
 startDateInputAnalytics.addEventListener("focus", () => {
