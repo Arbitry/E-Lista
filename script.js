@@ -1323,8 +1323,25 @@ function updateDonutChart(transactionArray) {
     const cashInTotal = getTransactionAmountTotal(transactionArray, "cash-in")
     const cashOutTotal = getTransactionAmountTotal(transactionArray, "cash-out")
 
+    let chartLabels = ["Cash In", "Cash Out"]
+    let displayColors = true
+
+    let chartData = [cashInTotal, cashOutTotal]
+    let chartColors = ["#62c55b", "#d53e2e"]
+
+     if (cashInTotal === 0 && cashOutTotal === 0) {
+        displayColors = false
+        chartLabels = ["No transactions"]
+        chartData = [1]
+        chartColors = ["#E5E7EB"]
+    }
+
     if (doughnutChart !== undefined) {
-        doughnutChart.data.datasets[0].data = [cashInTotal, cashOutTotal]
+        doughnutChart.data.labels = chartLabels
+        doughnutChart.options.plugins.tooltip.displayColors = displayColors
+        
+        doughnutChart.data.datasets[0].data = chartData
+        doughnutChart.data.datasets[0].backgroundColor = chartColors
         doughnutChart.update()
 
         return
@@ -1334,15 +1351,12 @@ function updateDonutChart(transactionArray) {
         type: "doughnut",
 
         data: {
-            labels: ["Cash In", "Cash Out"],
+            labels: chartLabels,
 
             datasets: [{
-                data: [cashInTotal, cashOutTotal],
-
-                backgroundColor: [
-                    "#62c55b", // Cash In
-                    "#d53e2e"  // Cash Out
-                ]       
+                data: chartData,
+                backgroundColor: chartColors
+ 
             }]
         },
 
@@ -1353,10 +1367,12 @@ function updateDonutChart(transactionArray) {
                 legend: {
                     display: false
                 },
-            
+
+                tooltip: {
+                    displayColors: displayColors
+                }
             }
         }      
-
     })
 }
  
