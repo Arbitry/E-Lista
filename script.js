@@ -1329,7 +1329,7 @@ function updateDonutChart(transactionArray) {
     let chartData = [cashInTotal, cashOutTotal]
     let chartColors = ["#62c55b", "#d53e2e"]
 
-     if (cashInTotal === 0 && cashOutTotal === 0) {
+    if (cashInTotal === 0 && cashOutTotal === 0) {
         displayColors = false
         chartLabels = ["No transactions"]
         chartData = [1]
@@ -1339,15 +1339,15 @@ function updateDonutChart(transactionArray) {
     if (doughnutChart !== undefined) {
         doughnutChart.data.labels = chartLabels
         doughnutChart.options.plugins.tooltip.displayColors = displayColors
-        
+
         doughnutChart.data.datasets[0].data = chartData
         doughnutChart.data.datasets[0].backgroundColor = chartColors
-        doughnutChart.update()
 
+        doughnutChart.update()
         return
     }
 
-    doughnutChart = new Chart(doughnutCanvas, {
+    doughnutChart = new Chart(doughnutCanvas, { 
         type: "doughnut",
 
         data: {
@@ -1356,7 +1356,6 @@ function updateDonutChart(transactionArray) {
             datasets: [{
                 data: chartData,
                 backgroundColor: chartColors
- 
             }]
         },
 
@@ -1369,13 +1368,22 @@ function updateDonutChart(transactionArray) {
                 },
 
                 tooltip: {
-                    displayColors: displayColors
+                    displayColors: displayColors,
+
+                    callbacks: {
+                        label: (context) => {
+                            if (context.label === "No transactions") {
+                                return null
+                            }
+
+                            return context.formattedValue
+                        }
+                    }
                 }
             }
-        }      
+        }
     })
 }
- 
 
 
 // =====================================================================
