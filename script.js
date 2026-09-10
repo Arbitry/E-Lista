@@ -116,6 +116,7 @@ const profitDateDisplay = document.getElementById("profit-date-display")
 
 const doughnutCanvas = document.getElementById("transaction-doughnut-chart")
 let doughnutChart;
+Chart.register(ChartDataLabels)
 
 
 const cashInLegendTxt = document.getElementById("cash-in-legend-text")
@@ -1329,11 +1330,30 @@ function updateDonutChart(transactionArray) {
     let chartData = [cashInTotal, cashOutTotal]
     let chartColors = ["#62c55b", "#d53e2e"]
 
+    const totalTransactions = cashInTotal + cashOutTotal
+    const cashInPercent = ((cashInTotal / totalTransactions) * 100).toFixed(2)
+    const cashOutPercent = ((cashOutTotal / totalTransactions) * 100).toFixed(2)
+
+    let chartPercentages = [`${cashInPercent}%`, `${cashOutPercent}%`]
+
     if (cashInTotal === 0 && cashOutTotal === 0) {
         displayColors = false
         chartLabels = ["No transactions"]
         chartData = [1]
         chartColors = ["#E5E7EB"]
+        chartPercentages = [null]
+    }
+
+    else if (cashInTotal === 0) {
+    chartLabels = ["Cash Out"]
+    chartData = [cashOutTotal]
+    chartColors = ["#d53e2e"]
+}
+
+    else if (cashOutTotal === 0) {  
+        chartLabels = ["Cash In"]
+        chartData = [cashInTotal]
+        chartColors = ["#62c55b"]
     }
 
     if (doughnutChart !== undefined) {
@@ -1342,6 +1362,7 @@ function updateDonutChart(transactionArray) {
 
         doughnutChart.data.datasets[0].data = chartData
         doughnutChart.data.datasets[0].backgroundColor = chartColors
+        doughnutChart.data.datasets[0].percentageLabels = chartPercentages
 
         doughnutChart.update()
         return
@@ -1355,7 +1376,9 @@ function updateDonutChart(transactionArray) {
 
             datasets: [{
                 data: chartData,
-                backgroundColor: chartColors
+                backgroundColor: chartColors,
+                percentageLabels: chartPercentages
+
             }]
         },
 
@@ -1365,6 +1388,20 @@ function updateDonutChart(transactionArray) {
             plugins: {
                 legend: {
                     display: false
+                },
+
+                datalabels: {
+                    color: "white",
+
+                    font: {
+                        weight: "bold",
+                        size: 14,
+                        family: "Inter"
+                    },
+
+                    formatter: (value, context) => {
+                        return context.dataset.percentageLabels[context.dataIndex]
+                    }
                 },
 
                 tooltip: {
